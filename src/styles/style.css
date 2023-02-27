@@ -1,0 +1,375 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  list-style: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  margin: 0 10%;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+input,
+select {
+  vertical-align: middle;
+}
+
+.IncomeExpenses-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 3% 0;
+}
+
+.IncomeExpenses-expenses {
+  width: 37%;
+  font-size: 2rem;
+  text-align: center;
+  padding: 2% 0;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.IncomeExpenses-list {
+  padding: 2% 0;
+  border: 1px solid #000;
+  border-radius: 5px;
+  width: 35%;
+}
+
+.IncomeExpenses-list__wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+.IncomeExpenses-list__lead {
+  font-size: 2rem;
+}
+
+.IncomeExpenses-list__income {
+  font-size: 3rem;
+}
+
+.IncomeExpenses-list__expense {
+  font-size: 3rem;
+}
+
+.AddItems {
+  margin: 3% 0;
+}
+
+.AddItems-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.AddItems-select {
+  width: 5%;
+  font-size: 2em;
+  text-align: center;
+}
+
+.AddItems-text {
+  font-size: 2rem;
+  width: 30%;
+  text-align: center;
+}
+
+.AddItems-text__label {
+  margin-right: 1%;
+}
+
+.AddItems-text__input {
+  font-size: 2rem;
+}
+
+.AddItems-amount {
+  font-size: 2rem;
+  width: 30%;
+  text-align: center;
+}
+
+.AddItems-amount__label {
+  margin-right: 1%;
+}
+
+.AddItems-amount__input {
+  font-size: 2rem;
+}
+
+.AddItems-amount__yen {
+  margin-left: 1%;
+}
+
+.AddItems-submit {
+  width: 10%;
+  font-size: 1.5rem !important;
+}
+
+.ItemsList {
+  margin: 5% 0;
+}
+
+.ItemsList-wrap {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.ItemsListCard {
+  width: 30%;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 3% 8%;
+}
+
+.ItemsListCard-title {
+  text-align: center;
+  margin: 2% 0;
+  font-size: 2rem;
+}
+
+.ItemsListCard-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  font-size: 1.6rem;
+  margin-top: 10%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid;
+}
+
+.ItemsListCard-list__delete {
+  font-size: 1.8rem !important;
+  padding: 0 !important;
+}
+
+.Total {
+  text-align: center;
+  margin: 5% 0;
+}
+
+.Total-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+.Total-expenses {
+  font-size: 1.6rem;
+  margin-right: 0.3%;
+}
+
+.Total-expenses__number {
+  font-size: 4.5rem;
+}
+
+.Total-expenses__yen {
+  font-size: 2rem;
+  margin-left: 0.3%;
+}
+/*# sourceMappingURL=style.css.map */

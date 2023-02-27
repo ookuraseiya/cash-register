@@ -1,0 +1,22 @@
+.Total {
+  text-align: center;
+  margin: 5% 0;
+  &-wrap {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: flex-end;
+    align-items: baseline;
+  }
+  &-expenses {
+    font-size: 1.6rem;
+    margin-right: 0.3%;
+    &__number {
+      font-size: 4.5rem;
+    }
+    &__yen {
+      font-size: 2rem;
+      margin-left: 0.3%;
+    }
+  }
+}

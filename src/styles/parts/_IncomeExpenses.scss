@@ -1,0 +1,38 @@
+.IncomeExpenses {
+  &-wrap {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 3% 0;
+  }
+  &-income {
+  }
+  &-expenses {
+    width: 37%;
+    font-size: 2rem;
+    text-align: center;
+    padding: 2% 0;
+    border: 1px solid #000;
+    border-radius: 5px;
+  }
+  &-list {
+    padding: 2% 0;
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: 35%;
+    &__wrap {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: baseline;
+    }
+    &__lead {
+      font-size: 2rem;
+    }
+    &__income {
+      font-size: 3rem;
+    }
+    &__expense {
+      font-size: 3rem;
+    }
+  }
+}
