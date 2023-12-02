@@ -8,8 +8,11 @@ import { ExpenseTotal } from './ExpenseTotal';
 
 // ドット三つ→{...props}の...の部分。(ワンちゃんスプレッド構文)
 //   setIncomeItem([...incomeItem, { incomes }]); ←スプレッド構文という
-
 export const Home = () => {
+  let incomeArray_text = [];
+  let incomeArray_number = [];
+  let expenseArray_text = [];
+  let expenseArray_number = [];
   const [value, setValue] = useState('income');
   const [inputText, setInputText] = useState('');
   const [inputNumber, setInputNumber] = useState('');
@@ -20,16 +23,23 @@ export const Home = () => {
     setIncomeItem([...incomeItem, { text: inputText, number: inputNumber }]);
   };
 
+  incomeArray_text = incomeItem.map(item => item.text);
+  incomeArray_number = incomeItem.map(item => item.number);
+  // console.log(incomeArray_number);
+
   const totalIncome = IncomeTotal(incomeItem);
 
   const addExpense = (inputText, inputNumber) => {
     setExpenseItem([...expenseItem, { text: inputText, number: inputNumber }]);
   };
 
+  expenseArray_text = incomeItem.map(item => item.text);
+  expenseArray_number = incomeItem.map(item => item.number);
+
   const totalExpense = ExpenseTotal(expenseItem);
 
   // useEffectよくわかんねえ
-  useEffect(() => {}, [incomeItem]);
+  // useEffect(() => {}, [incomeItem]);
 
   return (
     <div className="Home">
@@ -47,7 +57,7 @@ export const Home = () => {
           inputNumber={inputNumber}
           setInputNumber={setInputNumber}
         />
-        <ItemsList />
+        <ItemsList incomeProps={incomeArray_text} />
       </div>
     </div>
   );

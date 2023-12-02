@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 
-export const IncomeItem = () => {
+export const IncomeItem = (incomeArray_text, incomeArray_number) => {
   return (
     <div className="ItemsListCard">
       <div className="ItemsListCard-card">
@@ -9,7 +9,9 @@ export const IncomeItem = () => {
         <ul>
           <li className="ItemsListCard-list">
             <h3 className="ItemsListCard-list__lead">収入</h3>
-            <h3 className="ItemsListCard-list__income">+ 10000円</h3>
+            {/* {incomeArray_number.map((number)=>(
+              <h3 className="ItemsListCard-list__income">{number}</h3>
+            ))} */}
             <Button
               className="ItemsListCard-list__delete"
               type="submit"

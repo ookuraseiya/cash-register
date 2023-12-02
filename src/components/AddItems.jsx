@@ -48,7 +48,7 @@ export const AddItems = ({
           <div className="AddItems-wrap">
             <select className="AddItems-select" onChange={valueHandler}>
               {/* valueHandler(event) */}
-              <option className="AddItems-select__option" value="income">
+              <option className="AddItems-select__option" value="income" required>
                 +
               </option>
               <option className="AddItems-select__option" value="expense">
@@ -62,6 +62,7 @@ export const AddItems = ({
                 type="text"
                 value={inputText}
                 onChange={changeText}
+                required
               />
             </div>
             <div className="AddItems-amount">
@@ -71,6 +72,7 @@ export const AddItems = ({
                 type="number"
                 value={inputNumber}
                 onChange={changeNumber}
+                required
               />
               <label className="AddItems-amount__yen">円</label>
             </div>
@@ -80,7 +82,7 @@ export const AddItems = ({
               type="submit"
               onClick={submitButton}
             >
-              sss
+              決定
             </Button>
           </div>
         </form>
