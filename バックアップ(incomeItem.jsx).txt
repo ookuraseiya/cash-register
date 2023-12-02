@@ -1,0 +1,56 @@
+import * as React from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { UserCount } from './Home';
+import Button from '@mui/material/Button';
+
+export const IncomeItem = () => {
+  const [incomeData, setIncomeData] = useState(new Map());
+  const {
+    incomeArray_text,
+    setIncomeArray_text,
+    incomeArray_number,
+    setIncomeArray_number,
+  } = useContext(UserCount);
+
+  // for (let i = 0; i < incomeArray_text.length; i++) {
+  //   incomeData.set(incomeArray_text[i], incomeArray_number[i]);
+  // }
+
+  useEffect(() => {
+    const data = new Map();
+    for (let i = 0; i < incomeArray_text.length; i++) {
+      data.set(incomeArray_text[i], incomeArray_number[i]);
+    }
+    setIncomeData(data);
+  }, [incomeArray_text, incomeArray_number]);
+
+  const IncomeDelete = (key) => {
+    const newData = new Map(incomeData);
+    newData.delete(key);
+    setIncomeData(newData);
+  };
+
+  return (
+    <div className="ItemsListCard">
+      <div className="ItemsListCard-card">
+        <h1 className="ItemsListCard-title">収入一覧</h1>
+        <ul>
+          {Array.from(incomeData).map(([key, value]) => (
+            <li className="ItemsListCard-list" key={key}>
+              <h3 className="ItemsListCard-list__lead">{key}</h3>
+              <h3 className="ItemsListCard-list__income">{value}円</h3>
+              <Button
+                className="ItemsListCard-list__delete"
+                type="submit"
+                variant="contained"
+                onClick={() => IncomeDelete(key)}
+              >
+                ×
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,30 @@
+###################
+#### useEffect ####
+###################
+
+
+このエラーは、Reactが無限ループを防ぐためにレンダリングの回数を制限しているために発生します。具体的には、コンポーネントのレンダリング中に状態を更新すると、そのコンポーネントは再レンダリングされます。そして、その再レンダリング中に再び状態が更新されると、さらに再レンダリングが行われます。これが無限に続くと、Reactはエラーをスローします。
+
+あなたのコードでは、`Home`コンポーネントのレンダリング中に`setIncomeArray_text`、`setIncomeArray_number`、`setExpenseArray_text`、`setExpenseArray_number`といった状態設定関数を呼び出しています：
+
+```jsx
+setIncomeArray_text(incomeItem.map((item) => item.text));
+setIncomeArray_number(incomeItem.map((item) => item.number));
+setExpenseArray_text(expenseItem.map((item) => item.text));
+setExpenseArray_number(expenseItem.map((item) => item.number));
+```
+
+これがエラーの原因です。これらの状態設定関数は、イベントハンドラや`useEffect`の中など、レンダリングの結果としてではなく、ユーザーのインタラクションや副作用の結果として呼び出すべきです。
+
+この問題を解決するためには、これらの状態設定関数を`useEffect`の中で呼び出すことをお勧めします。以下に修正したコードを示します：
+
+```jsx
+useEffect(() => {
+  setIncomeArray_text(incomeItem.map((item) => item.text));
+  setIncomeArray_number(incomeItem.map((item) => item.number));
+  setExpenseArray_text(expenseItem.map((item) => item.text));
+  setExpenseArray_number(expenseItem.map((item) => item.number));
+}, [incomeItem, expenseItem]);
+```
+
+この修正により、`incomeItem`または`expenseItem`が更新されるたびに、これらの状態設定関数が呼び出されます。これにより、エラーは解消されるはずです。他に何か質問がありましたら、お気軽にどうぞ！.

@@ -6,11 +6,20 @@ import { Total } from './Total';
 import { IncomeTotal } from './IncomeTotal';
 import { ExpenseTotal } from './ExpenseTotal';
 
-export const DataContext = createContext();
+export const UserCount = createContext();
 
 // ドット三つ→{...props}の...の部分。(ワンちゃんスプレッド構文)
 //   setIncomeItem([...incomeItem, { incomes }]); ←スプレッド構文という
 export const Home = () => {
+  // let incomeArray_text = [];
+  // let incomeArray_number = [];
+  // let expenseArray_text = [];
+  // let expenseArray_number = [];
+  const [incomeArray_text, setIncomeArray_text] = useState([]);
+  const [incomeArray_number, setIncomeArray_number] = useState([]);
+  const [expenseArray_text, setExpenseArray_text] = useState([]);
+  const [expenseArray_number, setExpenseArray_number] = useState([]);
+
   const [value, setValue] = useState('income');
   const [inputText, setInputText] = useState('');
   const [inputNumber, setInputNumber] = useState('');
@@ -20,7 +29,12 @@ export const Home = () => {
   const addIncome = (inputText, inputNumber) => {
     setIncomeItem([...incomeItem, { text: inputText, number: inputNumber }]);
   };
+
   console.log(incomeItem);
+
+  // setIncomeArray_text(incomeItem.map((item) => item.text));
+  // setIncomeArray_number(incomeItem.map((item) => item.number));
+  // console.log(incomeArray_number);
 
   const totalIncome = IncomeTotal(incomeItem);
 
@@ -28,15 +42,18 @@ export const Home = () => {
     setExpenseItem([...expenseItem, { text: inputText, number: inputNumber }]);
   };
 
+  // setExpenseArray_text(expenseItem.map((item) => item.text));
+  // setExpenseArray_number(expenseItem.map((item) => item.number));
+
   const totalExpense = ExpenseTotal(expenseItem);
 
-  const removeIncome = (i) => {
-    const updatedIncomeItem = [...incomeItem];
-    updatedIncomeItem.splite(i, 1);
-    setIncomeItem(updatedIncomeItem);
-  };
-
   // useEffectよくわかんねえ
+  useEffect(() => {
+    setIncomeArray_text(incomeItem.map((item) => item.text));
+    setIncomeArray_number(incomeItem.map((item) => item.number));
+    setExpenseArray_text(expenseItem.map((item) => item.text));
+    setExpenseArray_number(expenseItem.map((item) => item.number));
+  }, [incomeItem, expenseItem]);
 
   return (
     <div className="Home">
@@ -54,9 +71,20 @@ export const Home = () => {
           inputNumber={inputNumber}
           setInputNumber={setInputNumber}
         />
-        <DataContext.Provider value={{ incomeItem, removeIncome }}>
+        <UserCount.Provider
+          value={{
+            incomeArray_text,
+            setIncomeArray_text,
+            incomeArray_number,
+            setIncomeArray_number,
+            expenseArray_text,
+            setExpenseArray_text,
+            expenseArray_number,
+            setExpenseArray_number,
+          }}
+        >
           <ItemsList />
-        </DataContext.Provider>
+        </UserCount.Provider>
       </div>
     </div>
   );
