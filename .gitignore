@@ -2,3 +2,4 @@ node_modules
 memo.txt
 backup(Home.jsx) .txt
 backup(incomeItem.jsx).txt
+.env
