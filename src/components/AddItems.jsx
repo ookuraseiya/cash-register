@@ -15,7 +15,7 @@ export const AddItems = () => {
     setInputNumber('');
   };
 
-  const erroe_reset = () => {
+  const error_reset = () => {
     setErrorInputText('');
     setErrorInputNumber('');
   };
@@ -49,7 +49,7 @@ export const AddItems = () => {
           inputNumber: Number(inputNumber),
           created_at: new Date().getTime(),
         });
-        erroe_reset();
+        error_reset();
         reset();
       } catch (error) {
         console.log(error);

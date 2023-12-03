@@ -1,6 +1,6 @@
 import { AddItems } from './AddItems';
 import { IncomeExpenses } from './IncomeExpenses';
-import React, { useEffect, createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { ItemsList } from './ItemsList';
 import { Total } from './Total';
 

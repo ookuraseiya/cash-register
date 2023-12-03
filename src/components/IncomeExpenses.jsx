@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { IncomeItem } from './IncomeItem';
 
 export const IncomeExpenses = ({ totalIncome, totalExpense }) => {
   return (
