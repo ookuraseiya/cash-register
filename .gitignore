@@ -1,1 +1,8 @@
 node_modules
+
+REACT_APP_FIREBASE_KEY="AIzaSyANVeRBdY9c4qZcvVnMBzvbwG7QRFg5m-4"
+REACT_APP_FIREBASE_DOMAIN="react-cash-register-4ebfc.firebaseapp.com"
+REACT_APP_FIREBASE_DATABASE="react-cash-register-4ebfc"
+REACT_APP_FIREBASE_PROJECT_ID="react-cash-register-4ebfc.appspot.com"
+REACT_APP_FIREBASE_STORAGE_BUCKET="プロジェクト.appspot.com"
+REACT_APP_FIREBASE_SENDER_ID="ID番号"

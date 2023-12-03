@@ -1,43 +1,43 @@
-import React from 'react';
+import { React, useState } from 'react';
 import Button from '@mui/material/Button';
+import { collection, addDoc } from 'firebase/firestore';
+import db from './firebase';
 
 // useContextを使いたいのでexport function AddItems()
-export const AddItems = ({
-  addIncome,
-  addExpense,
-  value,
-  setValue,
-  inputText,
-  setInputText,
-  inputNumber,
-  setInputNumber,
-}) => {
-  const valueHandler = (event) => {
-    setValue(event.target.value);
-  };
-
-  const changeText = (event) => {
-    setInputText(event.target.value);
-  };
-
-  const changeNumber = (event) => {
-    setInputNumber(event.target.value);
-  };
+export const AddItems = ({ addIncome, addExpense }) => {
+  const [value, setValue] = useState('income');
+  const [inputText, setInputText] = useState('');
+  const [inputNumber, setInputNumber] = useState('');
 
   const reset = () => {
     setInputText('');
     setInputNumber('');
   };
 
-  const submitButton = (event) => {
+  const submitButton = async (e) => {
     // preventDefaultを使えば勝手に更新されることがない。
-    event.preventDefault();
+    e.preventDefault();
     if (value === 'income') {
       addIncome(inputText, inputNumber);
       reset();
     } else {
       addExpense(inputText, inputNumber);
       reset();
+    }
+
+    try {
+      await addDoc(collection(db, 'posts'), {
+        value: value,
+        inputText: inputText,
+        inputNumber: Number(inputNumber),
+        created_at: new Date().getTime(),
+      });
+      setValue('');
+      setInputText('');
+      setInputNumber('');
+    } catch (error) {
+      console.log(error);
+      console.log('error');
     }
   };
 
@@ -46,9 +46,14 @@ export const AddItems = ({
       <div className="AddItems">
         <form>
           <div className="AddItems-wrap">
-            <select className="AddItems-select" onChange={valueHandler}>
-              {/* valueHandler(event) */}
-              <option className="AddItems-select__option" value="income" required>
+            <select
+              className="AddItems-select"
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            >
+              {/* valueHandler(e) */}
+              <option className="AddItems-select__option" value="income">
                 +
               </option>
               <option className="AddItems-select__option" value="expense">
@@ -61,8 +66,9 @@ export const AddItems = ({
                 className="AddItems-text__input"
                 type="text"
                 value={inputText}
-                onChange={changeText}
-                required
+                onChange={(e) => {
+                  setInputText(e.target.value);
+                }}
               />
             </div>
             <div className="AddItems-amount">
@@ -71,8 +77,9 @@ export const AddItems = ({
                 className="AddItems-amount__input"
                 type="number"
                 value={inputNumber}
-                onChange={changeNumber}
-                required
+                onChange={(e) => {
+                  setInputNumber(e.target.value);
+                }}
               />
               <label className="AddItems-amount__yen">円</label>
             </div>

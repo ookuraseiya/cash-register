@@ -11,16 +11,13 @@ export const DataContext = createContext();
 // ドット三つ→{...props}の...の部分。(ワンちゃんスプレッド構文)
 //   setIncomeItem([...incomeItem, { incomes }]); ←スプレッド構文という
 export const Home = () => {
-  const [value, setValue] = useState('income');
-  const [inputText, setInputText] = useState('');
-  const [inputNumber, setInputNumber] = useState('');
   const [incomeItem, setIncomeItem] = useState([]);
   const [expenseItem, setExpenseItem] = useState([]);
 
   const addIncome = (inputText, inputNumber) => {
     setIncomeItem([...incomeItem, { text: inputText, number: inputNumber }]);
   };
-  console.log(incomeItem);
+  // console.log(incomeItem);
 
   const totalIncome = IncomeTotal(incomeItem);
 
@@ -44,16 +41,7 @@ export const Home = () => {
       <div className="Home-bottom">
         <Total totalIncome={totalIncome} totalExpense={totalExpense} />
         <IncomeExpenses totalIncome={totalIncome} totalExpense={totalExpense} />
-        <AddItems
-          addIncome={addIncome}
-          addExpense={addExpense}
-          value={value}
-          setValue={setValue}
-          inputText={inputText}
-          setInputText={setInputText}
-          inputNumber={inputNumber}
-          setInputNumber={setInputNumber}
-        />
+        <AddItems addIncome={addIncome} addExpense={addExpense} />
         <DataContext.Provider value={{ incomeItem, removeIncome }}>
           <ItemsList />
         </DataContext.Provider>
