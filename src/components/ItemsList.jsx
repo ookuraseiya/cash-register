@@ -14,7 +14,12 @@ const deletePost = async (id) => {
   await deleteDoc(postRef);
 };
 
-export const ItemsList = () => {
+export const ItemsList = ({
+  totalIncome,
+  setTotalIncome,
+  totalExpense,
+  setTotalExpense,
+}) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -29,6 +34,29 @@ export const ItemsList = () => {
       );
     });
   }, []);
+
+  useEffect(() => {
+    const totalIncomeInputNumber = posts.reduce((total, post) => {
+      if (post.value === 'income') {
+        return total + post.inputNumber;
+      } else {
+        return total;
+      }
+    }, 0);
+
+    setTotalIncome(totalIncomeInputNumber);
+
+    const totalExpenseInputNumber = posts.reduce((total, post) => {
+      if (post.value === 'expense') {
+        return total + post.inputNumber;
+      } else {
+        return total;
+      }
+    }, 0);
+
+    setTotalExpense(totalExpenseInputNumber);
+  }, [posts]); // posts が変更されたときだけ useEffect が実行される
+  console.log(posts);
 
   return (
     <div className="ItemsList">

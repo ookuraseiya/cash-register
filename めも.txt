@@ -28,3 +28,270 @@ useEffect(() => {
 ```
 
 この修正により、`incomeItem`または`expenseItem`が更新されるたびに、これらの状態設定関数が呼び出されます。これにより、エラーは解消されるはずです。他に何か質問がありましたら、お気軽にどうぞ！.
+
+
+#########################
+#### リファクタリング ####
+#########################
+
+以下に、`Home.jsx`、`ItemList.jsx`、および`AddItem.jsx`のリファクタリングを行ったコードを示します。
+
+まず、`Home.jsx`です。`useState`で初期値を設定することで、`NaN`エラーを防ぐことができます。
+
+```jsx
+import { AddItems } from './AddItems';
+import { IncomeExpenses } from './IncomeExpenses';
+import React, { useEffect, createContext, useState } from 'react';
+import { ItemsList } from './ItemsList';
+import { Total } from './Total';
+
+export const DataContext = createContext();
+
+export const Home = () => {
+  const [totalIncome, setTotalIncome] = useState(0);  // 初期値を0に設定
+  const [totalExpense, setTotalExpense] = useState(0);  // 初期値を0に設定
+
+  return (
+    <div className="Home">
+      <div className="Home-top"></div>
+      <div className="Home-bottom">
+        <Total totalIncome={totalIncome} totalExpense={totalExpense} />
+        <IncomeExpenses totalIncome={totalIncome} totalExpense={totalExpense} />
+        <AddItems />
+        <ItemsList
+          totalIncome={totalIncome}
+          setTotalIncome={setTotalIncome}
+          totalExpense={totalExpense}
+          setTotalExpense={setTotalExpense}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+次に、`ItemList.jsx`です。`useEffect`フック内で非同期関数を呼び出す際には、その非同期関数を`useEffect`フック内で定義し、その後で呼び出すことが推奨されています。これにより、`useEffect`フックが完了する前にコンポーネントがアンマウントされた場合のメモリリークを防ぐことができます。
+
+```jsx
+import Button from '@mui/material/Button';
+import { collection, onSnapshot } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { doc, deleteDoc } from 'firebase/firestore';
+import db from './firebase';
+
+const getStrTime = (time) => {
+  let t = new Date(time);
+  return `${t.getFullYear()}/${t.getMonth() + 1}/${t.getDate()}`;
+};
+
+export const ItemsList = ({
+  totalIncome,
+  setTotalIncome,
+  totalExpense,
+  setTotalExpense,
+}) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(db, 'posts'), (posts) => {
+      setPosts(
+        posts.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .sort((a, b) => b.created_at - a.created_at)
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    const totalIncomeInputNumber = posts.reduce((total, post) => {
+      if (post.value === 'income') {
+        return total + post.inputNumber;
+      } else {
+        return total;
+      }
+    }, 0);
+
+    setTotalIncome(totalIncomeInputNumber);
+
+    const totalExpenseInputNumber = posts.reduce((total, post) => {
+      if (post.value === 'expense') {
+        return total + post.inputNumber;
+      } else {
+        return total;
+      }
+    }, 0);
+
+    setTotalExpense(totalExpenseInputNumber);
+  }, [posts]); // posts が変更されたときだけ useEffect が実行される
+
+  const deletePost = async (id) => {
+    const postRef = doc(db, 'posts', id);
+    await deleteDoc(postRef);
+  };
+
+  console.log(posts);
+
+  return (
+    <div className="ItemsList">
+      <div className="ItemsList-wrap">
+        <div className="ItemsListCard">
+          <div className="ItemsListCard-card">
+            <h1 className="ItemsListCard-title">収入一覧</h1>
+            <ul>
+              {posts.map((post) =>
+                post.value === 'income' ? (
+                  <li className="ItemsListCard-list">
+                    <h3 className="ItemsListCard-list__lead">
+                      {getStrTime(post.created_at)}
+                    </h3>
+                    <h3 className="ItemsListCard-list__lead">
+                      {post.inputText}
+                    </h3>
+                    <h3 className="ItemsListCard-list__income">
+                      {post.inputNumber}円
+                    </h3>
+                    <Button
+                      className="ItemsListCard-list__delete"
+                      type="submit"
+                      variant="contained"
+                      onClick={() => deletePost(post.id)}
+                    >
+                      ×
+                    </Button>
+                  </li>
+                ) : null
+              )}
+            </ul>
+          </div>
+        </div>
+        <div className="ItemsListCard">
+          <div className="ItemsListCard-card">
+            <h1 className="ItemsListCard-title">支出一覧</h1>
+            <ul>
+              {posts.map((post) =>
+                post.value === 'expense' ? (
+                  <li className="ItemsListCard-list">
+                    <h3 className="ItemsListCard-list__lead">
+                      {getStrTime(post.created_at)}
+                    </h3>
+                    <h3 className="ItemsListCard-list__lead">
+                      {post.inputText}
+                    </h3>
+                    <h3 className="ItemsListCard-list__income">
+                      {post.inputNumber}円
+                    </h3>
+                    <Button
+                      className="ItemsListCard-list__delete"
+                      type="submit"
+                      variant="contained"
+                      onClick={() => deletePost(post.id)}
+                    >
+                      ×
+                    </Button>
+                  </li>
+                ) : null
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+
+最後に、`AddItem.jsx`です。ここでは特にリファクタリングが必要な箇所は見当たりません。
+
+```jsx
+import { React, useState } from 'react';
+import Button from '@mui/material/Button';
+import { collection, addDoc } from 'firebase/firestore';
+import db from './firebase';
+
+export const AddItems = () => {
+  const [value, setValue] = useState('income');
+  const [inputText, setInputText] = useState('');
+  const [inputNumber, setInputNumber] = useState('');
+
+  const reset = () => {
+    setInputText('');
+    setInputNumber('');
+  };
+
+  const submitButton = async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, 'posts'), {
+        value: value,
+        inputText: inputText,
+        inputNumber: Number(inputNumber),
+        created_at: new Date().getTime(),
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div>
+      <div className="AddItems">
+        <form>
+          <div className="AddItems-wrap">
+            <select
+              className="AddItems-select"
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            >
+              {/* valueHandler(e) */}
+              <option className="AddItems-select__option" value="income">
+                +
+              </option>
+              <option className="AddItems-select__option" value="expense">
+                -
+              </option>
+            </select>
+            <div className="AddItems-text">
+              <label className="AddItems-text__label">内容</label>
+              <input
+                className="AddItems-text__input"
+                type="text"
+                value={inputText}
+                onChange={(e) => {
+                  setInputText(e.target.value);
+                }}
+              />
+            </div>
+            <div className="AddItems-amount">
+              <label className="AddItems-amount__label">金額</label>
+              <input
+                className="AddItems-amount__input"
+                type="number"
+                value={inputNumber}
+                onChange={(e) => {
+                  setInputNumber(e.target.value);
+                }}
+              />
+              <label className="AddItems-amount__yen">円</label>
+            </div>
+            <Button
+              className="AddItem-submit"
+              variant="contained"
+              type="submit"
+              onClick={submitButton}
+            >
+              決定
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+```
+

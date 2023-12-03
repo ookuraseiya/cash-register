@@ -3,8 +3,7 @@ import Button from '@mui/material/Button';
 import { collection, addDoc } from 'firebase/firestore';
 import db from './firebase';
 
-// useContextを使いたいのでexport function AddItems()
-export const AddItems = ({ addIncome, addExpense }) => {
+export const AddItems = () => {
   const [value, setValue] = useState('income');
   const [inputText, setInputText] = useState('');
   const [inputNumber, setInputNumber] = useState('');
@@ -15,15 +14,7 @@ export const AddItems = ({ addIncome, addExpense }) => {
   };
 
   const submitButton = async (e) => {
-    // preventDefaultを使えば勝手に更新されることがない。
     e.preventDefault();
-    if (value === 'income') {
-      addIncome(inputText, inputNumber);
-      reset();
-    } else {
-      addExpense(inputText, inputNumber);
-      reset();
-    }
 
     try {
       await addDoc(collection(db, 'posts'), {
@@ -32,12 +23,9 @@ export const AddItems = ({ addIncome, addExpense }) => {
         inputNumber: Number(inputNumber),
         created_at: new Date().getTime(),
       });
-      setValue('');
-      setInputText('');
-      setInputNumber('');
+      reset();
     } catch (error) {
       console.log(error);
-      console.log('error');
     }
   };
 
@@ -52,7 +40,6 @@ export const AddItems = ({ addIncome, addExpense }) => {
                 setValue(e.target.value);
               }}
             >
-              {/* valueHandler(e) */}
               <option className="AddItems-select__option" value="income">
                 +
               </option>
