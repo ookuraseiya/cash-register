@@ -295,3 +295,28 @@ export const AddItems = () => {
 };
 ```
 
+`Total.jsx`のリファクタリングを行います。ただし、このコードはすでに非常にシンプルで、大きな変更を必要としていないように見えます。唯一の提案は、`total`の計算を直接行う代わりに、新たな`useEffect`フックを使用して`totalIncome`と`totalExpense`の変更を監視し、それに応じて`total`を更新することです。これにより、`total`の値が常に最新の状態を反映するようになります。
+
+以下に、その変更を適用した`Total.jsx`のコードを示します。
+
+```jsx
+import React, { useEffect, useState } from 'react';
+
+export const Total = ({ totalIncome, totalExpense }) => {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(totalIncome - totalExpense);
+  }, [totalIncome, totalExpense]);
+
+  return (
+    <div className="Total">
+      <div className="Total-wrap">
+        <p className="Total-expenses">残高</p>
+        <h1 className="Total-expenses__number">{total}</h1>
+        <p className="Total-expenses__yen">円</p>
+      </div>
+    </div>
+  );
+};
+```

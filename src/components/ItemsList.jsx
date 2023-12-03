@@ -9,11 +9,6 @@ const getStrTime = (time) => {
   return `${t.getFullYear()}/${t.getMonth() + 1}/${t.getDate()}`;
 };
 
-const deletePost = async (id) => {
-  const postRef = doc(db, 'posts', id);
-  await deleteDoc(postRef);
-};
-
 export const ItemsList = ({
   totalIncome,
   setTotalIncome,
@@ -56,7 +51,16 @@ export const ItemsList = ({
 
     setTotalExpense(totalExpenseInputNumber);
   }, [posts]); // posts が変更されたときだけ useEffect が実行される
-  console.log(posts);
+
+  // postsの出力
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
+  const deletePost = async (id) => {
+    const postRef = doc(db, 'posts', id);
+    await deleteDoc(postRef);
+  };
 
   return (
     <div className="ItemsList">
@@ -67,7 +71,7 @@ export const ItemsList = ({
             <ul>
               {posts.map((post) =>
                 post.value === 'income' ? (
-                  <li className="ItemsListCard-list">
+                  <li className="ItemsListCard-list" key={post.id}>
                     <h3 className="ItemsListCard-list__lead">
                       {getStrTime(post.created_at)}
                     </h3>
@@ -97,7 +101,7 @@ export const ItemsList = ({
             <ul>
               {posts.map((post) =>
                 post.value === 'expense' ? (
-                  <li className="ItemsListCard-list">
+                  <li className="ItemsListCard-list" key={post.id}>
                     <h3 className="ItemsListCard-list__lead">
                       {getStrTime(post.created_at)}
                     </h3>

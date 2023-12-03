@@ -7,8 +7,8 @@ import { Total } from './Total';
 export const DataContext = createContext();
 
 export const Home = () => {
-  const [totalIncome, setTotalIncome] = useState();
-  const [totalExpense, setTotalExpense] = useState();
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
 
   return (
     <div className="Home">

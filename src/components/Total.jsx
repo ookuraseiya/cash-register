@@ -1,7 +1,12 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const Total = ({ totalIncome, totalExpense }) => {
-  const total = (totalIncome -= totalExpense);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(totalIncome - totalExpense);
+  }, [totalIncome, totalExpense]);
+
   return (
     <div className="Total">
       <div className="Total-wrap">
