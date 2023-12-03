@@ -38,7 +38,7 @@ DB
 
 ```bash
 git clone https://github.com/ookuraseiya/pocket-money-book
-cd pocket-money-book
+cd household-accoun-app
 npm start
 ```
 
