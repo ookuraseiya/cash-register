@@ -9,12 +9,7 @@ const getStrTime = (time) => {
   return `${t.getFullYear()}/${t.getMonth() + 1}/${t.getDate()}`;
 };
 
-export const ItemsList = ({
-  totalIncome,
-  setTotalIncome,
-  totalExpense,
-  setTotalExpense,
-}) => {
+export const ItemsList = ({ setTotalIncome, setTotalExpense }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -50,7 +45,7 @@ export const ItemsList = ({
     }, 0);
 
     setTotalExpense(totalExpenseInputNumber);
-  }, [posts]); // posts が変更されたときだけ useEffect が実行される
+  }, [posts]);
 
   // postsの出力
   useEffect(() => {

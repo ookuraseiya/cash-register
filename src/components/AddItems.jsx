@@ -7,25 +7,53 @@ export const AddItems = () => {
   const [value, setValue] = useState('income');
   const [inputText, setInputText] = useState('');
   const [inputNumber, setInputNumber] = useState('');
+  const [errorInputText, setErrorInputText] = useState('');
+  const [errorInputNumber, setErrorInputNumber] = useState('');
 
   const reset = () => {
     setInputText('');
     setInputNumber('');
   };
 
+  const erroe_reset = () => {
+    setErrorInputText('');
+    setErrorInputNumber('');
+  };
+
   const submitButton = async (e) => {
     e.preventDefault();
 
-    try {
-      await addDoc(collection(db, 'posts'), {
-        value: value,
-        inputText: inputText,
-        inputNumber: Number(inputNumber),
-        created_at: new Date().getTime(),
+    if (inputText.length === 0 && inputNumber.length !== 0) {
+      setErrorInputText({
+        errorMessage: '※未入力エラーです。',
       });
-      reset();
-    } catch (error) {
-      console.log(error);
+      setErrorInputNumber('');
+    } else if (inputText.length !== 0 && inputNumber.length === 0) {
+      setErrorInputText('');
+      setErrorInputNumber({
+        errorMessage: '※未入力エラーです。',
+      });
+    } else if (inputText.length === 0 && inputNumber.length === 0) {
+      setErrorInputText({
+        errorMessage: '※未入力エラーです。',
+      });
+      setErrorInputNumber({
+        errorMessage: '※未入力エラーです。',
+      });
+      return false;
+    } else if (inputText.length !== 0 && inputNumber.length !== 0) {
+      try {
+        await addDoc(collection(db, 'posts'), {
+          value: value,
+          inputText: inputText,
+          inputNumber: Number(inputNumber),
+          created_at: new Date().getTime(),
+        });
+        erroe_reset();
+        reset();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -57,6 +85,9 @@ export const AddItems = () => {
                   setInputText(e.target.value);
                 }}
               />
+              {errorInputText && (
+                <p className="AddItems-error">{errorInputText.errorMessage}</p>
+              )}
             </div>
             <div className="AddItems-amount">
               <label className="AddItems-amount__label">金額</label>
@@ -69,6 +100,11 @@ export const AddItems = () => {
                 }}
               />
               <label className="AddItems-amount__yen">円</label>
+              {errorInputNumber && (
+                <p className="AddItems-error">
+                  {errorInputNumber.errorMessage}
+                </p>
+              )}
             </div>
             <Button
               className="AddItem-submit"
@@ -76,7 +112,7 @@ export const AddItems = () => {
               type="submit"
               onClick={submitButton}
             >
-              決定
+              入力
             </Button>
           </div>
         </form>

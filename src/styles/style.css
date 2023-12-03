@@ -253,7 +253,12 @@ select {
 }
 .AddItems-submit {
   width: 10%;
-  font-size: 1.5rem !important;
+  font-size: 2rem !important;
+}
+.AddItems-error {
+  margin-top: 3%;
+  color: red;
+  font-size: 1.5rem;
 }
 
 .ItemsList {
