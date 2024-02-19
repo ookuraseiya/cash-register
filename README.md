@@ -10,22 +10,14 @@ React.js で何か Web アプリを作ってみたいと思い、React.js で家
 
 <br>
 
-# 開発環境
+# 使用技術
 
-Frontend
-
-- React.js 18.1.0
+- React.js
 - HTML
 - SCSS(CSS)
 - Material-ui
-
-Backend
-
 - Node.js 14.17.5
 - Firebase
-
-DB
-
 - Cloud Firestore
 
 <br>
@@ -49,9 +41,3 @@ npm start
 1.  ログイン機能
 2.  カレンダー機能
 3.  グラフ機能
-
-<br>
-
-# 最後に
-
-ここまで読んでいただきありがとうございました。
