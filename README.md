@@ -16,7 +16,7 @@ React.js で何か Web アプリを作ってみたいと思い、React.js で家
 - HTML
 - SCSS(CSS)
 - Material-ui
-- Node.js 14.17.5
+- Node.js
 - Firebase
 - Cloud Firestore
 
