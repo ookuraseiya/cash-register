@@ -22,18 +22,6 @@ React.js で何か Web アプリを作ってみたいと思い、React.js で家
 
 <br>
 
-# システムの実行方法
-
-実行方法
-
-```bash
-git clone https://github.com/ookuraseiya/pocket-money-book
-cd household-accoun-app
-npm start
-```
-
-<br>
-
 # これからの課題
 
 これから以下の機能を実装・追加しようと考えています。
